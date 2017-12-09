@@ -98,7 +98,13 @@ namespace OpenRA.Traits
 
 		public void GiveCash(int num)
 		{
-			if (Cash < int.MaxValue)
+            if (num < 0)
+            {
+                TakeCash(Math.Abs(num));
+                return;
+            }
+
+            if (Cash < int.MaxValue)
 			{
 				try
 				{
