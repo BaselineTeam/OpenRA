@@ -150,6 +150,13 @@ namespace OpenRA.Mods.Common.Traits
 					break;
 				}
 
+				case "DevTakeCash":
+				{
+					var amount = order.ExtraData != 0 ? (int)order.ExtraData : info.Cash;
+					self.Trait<PlayerResources>().TakeCash(amount);
+					break;
+				}
+
 				case "DevGrowResources":
 				{
 					foreach (var a in self.World.ActorsWithTrait<ISeedableResource>())

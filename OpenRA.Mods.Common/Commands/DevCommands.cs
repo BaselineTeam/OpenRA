@@ -45,6 +45,8 @@ namespace OpenRA.Mods.Common.Commands
 			register("visibility", "toggles visibility checks and minimap.");
 			register("givecash", "gives the default or specified amount of money.");
 			register("givecashall", "gives the default or specified amount of money to all players and ai.");
+			register("takecash", "takes the default or specified amount of money.");
+			register("takecashall", "takes the deafult or specified amount of money to all players and ai.");
 			register("instantbuild", "toggles instant building.");
 			register("buildanywhere", "toggles you the ability to build anywhere.");
 			register("unlimitedpower", "toggles infinite power.");
@@ -72,7 +74,10 @@ namespace OpenRA.Mods.Common.Commands
 				case "givecash":
 					var givecashorder = new Order("DevGiveCash", world.LocalPlayer.PlayerActor, false);
 					int cash;
-					int.TryParse(arg, out cash);
+					float fcash;
+
+					float.TryParse(arg, out fcash);
+					cash = (int)fcash;
 
 					givecashorder.ExtraData = (uint)cash;
 					Game.Debug("Giving {0} credits to player {1}.", cash == 0 ? "cheat default" : cash.ToString(CultureInfo.InvariantCulture), world.LocalPlayer.PlayerName);
@@ -81,7 +86,8 @@ namespace OpenRA.Mods.Common.Commands
 					break;
 
 				case "givecashall":
-					int.TryParse(arg, out cash);
+					float.TryParse(arg, out fcash);
+					cash = (int)fcash;
 
 					foreach (var player in world.Players.Where(p => !p.NonCombatant))
 					{
@@ -89,6 +95,34 @@ namespace OpenRA.Mods.Common.Commands
 						givecashall.ExtraData = (uint)cash;
 						Game.Debug("Giving {0} credits to player {1}.", cash == 0 ? "cheat default" : cash.ToString(CultureInfo.InvariantCulture), player.PlayerName);
 						world.IssueOrder(givecashall);
+					}
+
+					break;
+
+				case "takecash":
+					var takecashorder = new Order("DevTakeCash", world.LocalPlayer.PlayerActor, false);
+					int tcash;
+					float ftcash;
+
+					float.TryParse(arg, out ftcash);
+					tcash = (int)ftcash;
+
+					takecashorder.ExtraData = (uint)tcash;
+					Game.Debug("Taking {0} credits from player {1}.", tcash == 0 ? "cheat default" : tcash.ToString(CultureInfo.InvariantCulture), world.LocalPlayer.PlayerName);
+					world.IssueOrder(takecashorder);
+
+					break;
+
+				case "takecashall":
+					float.TryParse(arg, out ftcash);
+					tcash = (int)ftcash;
+
+					foreach (var player in world.Players.Where(p => !p.NonCombatant))
+					{
+						var takecashall = new Order("DevTakeCash", player.PlayerActor, false);
+						takecashall.ExtraData = (uint)tcash;
+						Game.Debug("Taking {0} credits from player {1}.", tcash == 0 ? "cheat default" : tcash.ToString(CultureInfo.InvariantCulture), player.PlayerName);
+						world.IssueOrder(takecashall);
 					}
 
 					break;

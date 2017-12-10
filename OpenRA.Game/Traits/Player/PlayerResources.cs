@@ -98,6 +98,12 @@ namespace OpenRA.Traits
 
 		public void GiveCash(int num)
 		{
+			if (num < 0)
+			{
+				TakeCash(Math.Abs(num));
+				return;
+			}
+
 			if (Cash < int.MaxValue)
 			{
 				try
@@ -131,6 +137,12 @@ namespace OpenRA.Traits
 
 		public bool TakeCash(int num, bool notifyLowFunds = false)
 		{
+			if (num < 0)
+			{
+				GiveCash(Math.Abs(num));
+				return true;
+			}
+
 			if (Cash + Resources < num)
 			{
 				if (notifyLowFunds && !string.IsNullOrEmpty(info.InsufficientFundsNotification) &&
