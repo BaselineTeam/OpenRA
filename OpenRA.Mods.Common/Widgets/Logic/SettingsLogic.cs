@@ -595,7 +595,9 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 				{
 					{ "DevReloadChromeKey", "Reload Chrome" },
 					{ "HideUserInterfaceKey", "Hide UI" },
-					{ "TakeScreenshotKey", "Take screenshot" }
+					{ "TakeScreenshotKey", "Take screenshot" },
+					//##
+					{ "DevConsoleKey", "Open Console"}
 				};
 
 				var header = ScrollItemWidget.Setup(hotkeyHeader, returnTrue, doNothing);

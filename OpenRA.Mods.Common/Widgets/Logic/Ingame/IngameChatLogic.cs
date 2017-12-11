@@ -111,9 +111,19 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 				if (e.Event == KeyInputEvent.Up)
 					return false;
 
-				if (!chatChrome.IsVisible() && (e.Key == Keycode.RETURN || e.Key == Keycode.KP_ENTER || e.Key == Keycode.SLASH))
+				if (!chatChrome.IsVisible() && (e.Key == Keycode.RETURN || e.Key == Keycode.KP_ENTER))
 				{
 					OpenChat();
+					return true;
+				}
+
+				if (!chatChrome.IsVisible() && (e.Key == Game.Settings.Keys.DevConsoleKey.Key))
+				{
+					OpenChat();
+					chatText.Text = "/";
+					chatText.Text = chatText.Text.Remove(0, 1);
+					chatText.CursorPosition = 1;
+
 					return true;
 				}
 

@@ -150,6 +150,7 @@ namespace OpenRA.Mods.Common.Widgets
 			switch (e.Key) {
 				case Keycode.RETURN:
 				case Keycode.KP_ENTER:
+				case Keycode.SLASH:
 					if (OnEnterKey())
 						return true;
 					break;
